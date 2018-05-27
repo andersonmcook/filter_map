@@ -16,7 +16,8 @@ defmodule Benchmark do
       comprehension: fn x -> for n <- x, odd?(n), do: square(n) end,
       reduce: fn x -> x |> Enum.reduce([], &reducer/2) |> Enum.reverse() end,
       concat_reduce: fn x -> Enum.reduce(x, [], &concat_reducer/2) end,
-      stream: fn x -> x |> Stream.filter(&odd?/1) |> Stream.map(&square/1) |> Enum.to_list() end
+      stream: fn x -> x |> Stream.filter(&odd?/1) |> Stream.map(&square/1) |> Enum.to_list() end,
+      recursion_tail: fn x -> FilterMap.filter_map_tail(x, &odd?/1, &square/1) end
     }
 
     opts = [

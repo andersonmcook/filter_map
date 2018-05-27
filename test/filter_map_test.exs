@@ -23,5 +23,7 @@ defmodule FilterMapTest do
     assert Enum.reduce(arg, [], &concat_reducer/2) == result
 
     assert arg |> Stream.filter(&odd?/1) |> Stream.map(&square/1) |> Enum.to_list() == result
+
+    assert FilterMap.filter_map_tail(arg, &odd?/1, &square/1) == result
   end
 end

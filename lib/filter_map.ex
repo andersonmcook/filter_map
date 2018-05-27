@@ -21,4 +21,15 @@ defmodule FilterMap do
       filter_map_concat(xs, f, m)
     end
   end
+
+  def filter_map_tail(list, f, m), do: do_filter_map_tail(list, f, m, [])
+
+  defp do_filter_map_tail([], _, _, acc), do: :lists.reverse(acc)
+  defp do_filter_map_tail([x | xs], f, m, acc) do
+    if f.(x) do
+      do_filter_map_tail(xs, f, m, [m.(x) | acc])
+    else
+      do_filter_map_tail(xs, f, m, acc)
+    end
+  end
 end
