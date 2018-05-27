@@ -11,8 +11,9 @@ defmodule Benchmark do
       recursion_prepend: fn -> FilterMap.filter_map(arg, &odd?/1, &square/1) end,
       enum: fn -> arg |> Enum.filter(&odd?/1) |> Enum.map(&square/1) end,
       comprehension: fn -> for n <- arg, odd?(n), do: square(n) end,
-      reduce: fn -> Enum.reduce(arg, [], &reducer/2) |> Enum.reverse() end,
-      concat_reduce: fn -> Enum.reduce(arg, [], &concat_reducer/2) end
+      reduce: fn -> arg |> Enum.reduce([], &reducer/2) |> Enum.reverse() end,
+      concat_reduce: fn -> Enum.reduce(arg, [], &concat_reducer/2) end,
+      stream: fn -> arg |> Stream.filter(&odd?/1) |> Stream.map(&square/1) |> Enum.to_list() end
     }
 
     opts = [

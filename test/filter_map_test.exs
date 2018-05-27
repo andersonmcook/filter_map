@@ -18,8 +18,10 @@ defmodule FilterMapTest do
 
     assert for n <- arg, odd?(n), do: square(n) == result
 
-    assert Enum.reduce(arg, [], &reducer/2) |> Enum.reverse() == result
+    assert arg |> Enum.reduce([], &reducer/2) |> Enum.reverse() == result
 
     assert Enum.reduce(arg, [], &concat_reducer/2) == result
+
+    assert arg |> Stream.filter(&odd?/1) |> Stream.map(&square/1) |> Enum.to_list() == result
   end
 end
